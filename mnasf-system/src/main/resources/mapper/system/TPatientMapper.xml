@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mnasf.system.mapper.TPatientMapper">
+    
+    <resultMap type="TPatient" id="TPatientResult">
+        <result property="patientId"    column="patient_id"    />
+        <result property="patientName"    column="patient_name"    />
+        <result property="gender"    column="gender"    />
+        <result property="age"    column="age"    />
+        <result property="phone"    column="phone"    />
+        <result property="email"    column="email"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="address"    column="address"    />
+        <result property="symptoms"    column="symptoms"    />
+        <result property="medicalHistory"    column="medical_history"    />
+        <result property="medication"    column="medication"    />
+        <result property="psychologicalStatus"    column="psychological_status"    />
+        <result property="lifestyle"    column="lifestyle"    />
+        <result property="fallHistory"    column="fall_history"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTPatientVo">
+        select patient_id, patient_name, gender, age, phone, email, id_card, address, symptoms, medical_history, medication, psychological_status, lifestyle, fall_history, status, create_by, create_time, update_by, update_time, remark from t_patient
+    </sql>
+
+    <select id="selectTPatientList" parameterType="com.mnasf.system.domain.TPatient" resultMap="TPatientResult">
+        <include refid="selectTPatientVo"/>
+        <where>  
+            <if test="patientName != null  and patientName != ''"> and patient_name like concat('%', #{patientName}, '%')</if>
+            <if test="gender != null  and gender != ''"> and gender = #{gender}</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="idCard != null  and idCard != ''"> and id_card = #{idCard}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectTPatientById" parameterType="Long" resultMap="TPatientResult">
+        <include refid="selectTPatientVo"/>
+        where patient_id = #{patientId}
+    </select>
+        
+    <insert id="insertTPatient" parameterType="com.mnasf.system.domain.TPatient" useGeneratedKeys="true" keyProperty="patientId">
+        insert into t_patient
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientName != null">patient_name,</if>
+            <if test="gender != null">gender,</if>
+            <if test="age != null">age,</if>
+            <if test="phone != null">phone,</if>
+            <if test="email != null">email,</if>
+            <if test="idCard != null">id_card,</if>
+            <if test="address != null">address,</if>
+            <if test="symptoms != null">symptoms,</if>
+            <if test="medicalHistory != null">medical_history,</if>
+            <if test="medication != null">medication,</if>
+            <if test="psychologicalStatus != null">psychological_status,</if>
+            <if test="lifestyle != null">lifestyle,</if>
+            <if test="fallHistory != null">fall_history,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientName != null">#{patientName},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="age != null">#{age},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="email != null">#{email},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="address != null">#{address},</if>
+            <if test="symptoms != null">#{symptoms},</if>
+            <if test="medicalHistory != null">#{medicalHistory},</if>
+            <if test="medication != null">#{medication},</if>
+            <if test="psychologicalStatus != null">#{psychologicalStatus},</if>
+            <if test="lifestyle != null">#{lifestyle},</if>
+            <if test="fallHistory != null">#{fallHistory},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            sysdate()
+         </trim>
+    </insert>
+
+    <update id="updateTPatient" parameterType="com.mnasf.system.domain.TPatient">
+        update t_patient
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientName != null">patient_name = #{patientName},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="symptoms != null">symptoms = #{symptoms},</if>
+            <if test="medicalHistory != null">medical_history = #{medicalHistory},</if>
+            <if test="medication != null">medication = #{medication},</if>
+            <if test="psychologicalStatus != null">psychological_status = #{psychologicalStatus},</if>
+            <if test="lifestyle != null">lifestyle = #{lifestyle},</if>
+            <if test="fallHistory != null">fall_history = #{fallHistory},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </trim>
+        where patient_id = #{patientId}
+    </update>
+
+    <delete id="deleteTPatientById" parameterType="Long">
+        delete from t_patient where patient_id = #{patientId}
+    </delete>
+
+    <delete id="deleteTPatientByIds" parameterType="String">
+        delete from t_patient where patient_id in 
+        <foreach item="patientId" collection="array" open="(" separator="," close=")">
+            #{patientId}
+        </foreach>
+    </delete>
+</mapper> 
