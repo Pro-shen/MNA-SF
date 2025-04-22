@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mnasf.system.mapper.TNutritionAssessmentMapper">
+    
+    <resultMap type="TNutritionAssessment" id="TNutritionAssessmentResult">
+        <result property="id"    column="id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="assessmentTime"    column="assessment_time"    />
+        <result property="assessorId"    column="assessor_id"    />
+        <result property="conutScore"    column="conut_score"    />
+        <result property="gnriScore"    column="gnri_score"    />
+        <result property="pniScore"    column="pni_score"    />
+        <result property="mnaScore"    column="mna_score"    />
+        <result property="mnaSfScore"    column="mna_sf_score"    />
+        <result property="calfCircumference"    column="calf_circumference"    />
+        <result property="gripStrength"    column="grip_strength"    />
+        <result property="interventionPlan"    column="intervention_plan"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTNutritionAssessmentVo">
+        select id, patient_id, assessment_time, assessor_id, conut_score, gnri_score, pni_score, mna_score, mna_sf_score, calf_circumference, grip_strength, intervention_plan, create_time, update_time, create_by, update_by, remark from t_nutrition_assessment
+    </sql>
+
+    <select id="selectTNutritionAssessmentList" parameterType="TNutritionAssessment" resultMap="TNutritionAssessmentResult">
+        <include refid="selectTNutritionAssessmentVo"/>
+        <where>  
+            <if test="patientId != null "> and patient_id = #{patientId}</if>
+            <if test="assessmentTime != null "> and assessment_time = #{assessmentTime}</if>
+            <if test="assessorId != null "> and assessor_id = #{assessorId}</if>
+            <if test="conutScore != null "> and conut_score = #{conutScore}</if>
+            <if test="gnriScore != null "> and gnri_score = #{gnriScore}</if>
+            <if test="pniScore != null "> and pni_score = #{pniScore}</if>
+            <if test="mnaScore != null "> and mna_score = #{mnaScore}</if>
+            <if test="mnaSfScore != null "> and mna_sf_score = #{mnaSfScore}</if>
+            <if test="calfCircumference != null "> and calf_circumference = #{calfCircumference}</if>
+            <if test="gripStrength != null "> and grip_strength = #{gripStrength}</if>
+            <if test="interventionPlan != null  and interventionPlan != ''"> and intervention_plan = #{interventionPlan}</if>
+        </where>
+    </select>
+    
+    <select id="selectTNutritionAssessmentById" parameterType="Long" resultMap="TNutritionAssessmentResult">
+        <include refid="selectTNutritionAssessmentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTNutritionAssessment" parameterType="TNutritionAssessment" useGeneratedKeys="true" keyProperty="id">
+        insert into t_nutrition_assessment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">patient_id,</if>
+            <if test="assessmentTime != null">assessment_time,</if>
+            <if test="assessorId != null">assessor_id,</if>
+            <if test="conutScore != null">conut_score,</if>
+            <if test="gnriScore != null">gnri_score,</if>
+            <if test="pniScore != null">pni_score,</if>
+            <if test="mnaScore != null">mna_score,</if>
+            <if test="mnaSfScore != null">mna_sf_score,</if>
+            <if test="calfCircumference != null">calf_circumference,</if>
+            <if test="gripStrength != null">grip_strength,</if>
+            <if test="interventionPlan != null">intervention_plan,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">#{patientId},</if>
+            <if test="assessmentTime != null">#{assessmentTime},</if>
+            <if test="assessorId != null">#{assessorId},</if>
+            <if test="conutScore != null">#{conutScore},</if>
+            <if test="gnriScore != null">#{gnriScore},</if>
+            <if test="pniScore != null">#{pniScore},</if>
+            <if test="mnaScore != null">#{mnaScore},</if>
+            <if test="mnaSfScore != null">#{mnaSfScore},</if>
+            <if test="calfCircumference != null">#{calfCircumference},</if>
+            <if test="gripStrength != null">#{gripStrength},</if>
+            <if test="interventionPlan != null">#{interventionPlan},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTNutritionAssessment" parameterType="TNutritionAssessment">
+        update t_nutrition_assessment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="assessmentTime != null">assessment_time = #{assessmentTime},</if>
+            <if test="assessorId != null">assessor_id = #{assessorId},</if>
+            <if test="conutScore != null">conut_score = #{conutScore},</if>
+            <if test="gnriScore != null">gnri_score = #{gnriScore},</if>
+            <if test="pniScore != null">pni_score = #{pniScore},</if>
+            <if test="mnaScore != null">mna_score = #{mnaScore},</if>
+            <if test="mnaSfScore != null">mna_sf_score = #{mnaSfScore},</if>
+            <if test="calfCircumference != null">calf_circumference = #{calfCircumference},</if>
+            <if test="gripStrength != null">grip_strength = #{gripStrength},</if>
+            <if test="interventionPlan != null">intervention_plan = #{interventionPlan},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTNutritionAssessmentById" parameterType="Long">
+        delete from t_nutrition_assessment where id = #{id}
+    </delete>
+
+    <delete id="deleteTNutritionAssessmentByIds" parameterType="String">
+        delete from t_nutrition_assessment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper> 
