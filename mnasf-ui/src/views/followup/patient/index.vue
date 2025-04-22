@@ -108,6 +108,13 @@
             <el-button
               size="mini"
               type="text"
+              icon="el-icon-view"
+              @click="handleDetail(scope.row)"
+              v-hasPermi="['followup:patient:query']"
+            >详情</el-button>
+            <el-button
+              size="mini"
+              type="text"
               icon="el-icon-edit"
               @click="handleUpdate(scope.row)"
               v-hasPermi="['followup:patient:edit']"
@@ -198,6 +205,35 @@
           <el-button @click="cancel">取 消</el-button>
         </div>
       </el-dialog>
+
+      <!-- 查看患者详情对话框 -->
+      <el-dialog title="患者详情" :visible.sync="detailOpen" width="700px" append-to-body>
+        <el-descriptions :column="2" border>
+          <el-descriptions-item label="患者姓名">{{ detailForm.patientName }}</el-descriptions-item>
+          <el-descriptions-item label="性别">
+            <dict-tag :options="dict.type.sys_user_sex" :value="detailForm.gender"/>
+          </el-descriptions-item>
+          <el-descriptions-item label="年龄">{{ detailForm.age }}</el-descriptions-item>
+          <el-descriptions-item label="手机号码">{{ detailForm.phone }}</el-descriptions-item>
+          <el-descriptions-item label="邮箱">{{ detailForm.email }}</el-descriptions-item>
+          <el-descriptions-item label="身份证号">{{ detailForm.idCard }}</el-descriptions-item>
+          <el-descriptions-item label="地址" :span="2">{{ detailForm.address }}</el-descriptions-item>
+          <el-descriptions-item label="症状描述" :span="2">{{ detailForm.symptoms }}</el-descriptions-item>
+          <el-descriptions-item label="病史" :span="2">{{ detailForm.medicalHistory }}</el-descriptions-item>
+          <el-descriptions-item label="用药情况" :span="2">{{ detailForm.medication }}</el-descriptions-item>
+          <el-descriptions-item label="心理状态" :span="2">{{ detailForm.psychologicalStatus }}</el-descriptions-item>
+          <el-descriptions-item label="生活方式" :span="2">{{ detailForm.lifestyle }}</el-descriptions-item>
+          <el-descriptions-item label="跌倒史" :span="2">{{ detailForm.fallHistory }}</el-descriptions-item>
+          <el-descriptions-item label="状态">
+            <dict-tag :options="dict.type.sys_normal_disable" :value="detailForm.status"/>
+          </el-descriptions-item>
+          <el-descriptions-item label="创建时间">{{ parseTime(detailForm.createTime) }}</el-descriptions-item>
+          <el-descriptions-item label="备注" :span="2">{{ detailForm.remark }}</el-descriptions-item>
+        </el-descriptions>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="detailOpen = false">关 闭</el-button>
+        </div>
+      </el-dialog>
     </div>
   </template>
   
@@ -227,6 +263,10 @@
         title: "",
         // 是否显示弹出层
         open: false,
+        // 是否显示详情弹出层
+        detailOpen: false,
+        // 详情表单数据
+        detailForm: {},
         // 查询参数
         queryParams: {
           pageNum: 1,
@@ -364,6 +404,11 @@
         this.download('followup/patient/export', {
           ...this.queryParams
         }, `patient_${new Date().getTime()}.xlsx`)
+      },
+      /** 查看患者详情 */
+      handleDetail(row) {
+        this.detailForm = row;
+        this.detailOpen = true;
       }
     }
   };
