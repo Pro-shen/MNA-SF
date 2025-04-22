@@ -87,6 +87,19 @@ export const constantRoutes = [
         meta: { title: '个人中心', icon: 'user' }
       }
     ]
+  },
+  {
+    path: '/followup',
+    component: Layout,
+    hidden: false,
+    children: [
+      {
+        path: 'doctor',
+        component: () => import('@/views/followup/doctor/index'),
+        name: 'Doctor',
+        meta: { title: '医生管理', icon: 'user' }
+      }
+    ]
   }
 ]
 

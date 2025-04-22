@@ -1,0 +1,20 @@
+CREATE TABLE t_doctor (
+    doctor_id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '医生ID',
+    user_id BIGINT NOT NULL COMMENT '关联用户ID',
+    name VARCHAR(50) NOT NULL COMMENT '医生姓名',
+    gender CHAR(1) COMMENT '性别（0男 1女 2未知）',
+    age INT COMMENT '年龄',
+    phone VARCHAR(11) COMMENT '联系电话',
+    email VARCHAR(50) COMMENT '电子邮箱',
+    department VARCHAR(50) COMMENT '所属科室',
+    title VARCHAR(50) COMMENT '职称',
+    specialty VARCHAR(200) COMMENT '专业特长',
+    qualification VARCHAR(200) COMMENT '专业资质',
+    work_experience TEXT COMMENT '工作经验',
+    status CHAR(1) DEFAULT '0' COMMENT '状态（0正常 1停用）',
+    create_by VARCHAR(64) DEFAULT '' COMMENT '创建者',
+    create_time DATETIME COMMENT '创建时间',
+    update_by VARCHAR(64) DEFAULT '' COMMENT '更新者',
+    update_time DATETIME COMMENT '更新时间',
+    remark VARCHAR(500) DEFAULT NULL COMMENT '备注'
+) COMMENT='医生信息表'; 

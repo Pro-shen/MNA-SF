@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mnasf.system.mapper.TDoctorMapper">
+
+    <resultMap type="com.mnasf.system.domain.TDoctor" id="TDoctorResult">
+        <id property="doctorId" column="doctor_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="age" column="age"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="department" column="department"/>
+        <result property="title" column="title"/>
+        <result property="specialty" column="specialty"/>
+        <result property="qualification" column="qualification"/>
+        <result property="workExperience" column="work_experience"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectDoctorVo">
+        select doctor_id,
+               user_id,
+               name,
+               gender,
+               age,
+               phone,
+               email,
+               department,
+               title,
+               specialty,
+               qualification,
+               work_experience,
+               status,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               remark
+        from t_doctor
+    </sql>
+
+    <select id="selectDoctorList" parameterType="TDoctor" resultMap="TDoctorResult">
+        <include refid="selectDoctorVo"/>
+        <where>
+            <if test="name != null and name != ''">
+                AND name like concat('%', #{name}, '%')
+            </if>
+            <if test="department != null and department != ''">
+                AND department = #{department}
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="Long" resultMap="TDoctorResult">
+        <include refid="selectDoctorVo"/>
+        where doctor_id = #{doctorId}
+    </select>
+
+    <insert id="insert" parameterType="TDoctor" useGeneratedKeys="true" keyProperty="doctorId">
+        insert into t_doctor(
+        <if test="userId != null">user_id,</if>
+        <if test="name != null">name,</if>
+        <if test="gender != null">gender,</if>
+        <if test="age != null">age,</if>
+        <if test="phone != null">phone,</if>
+        <if test="email != null">email,</if>
+        <if test="department != null">department,</if>
+        <if test="title != null">title,</if>
+        <if test="specialty != null">specialty,</if>
+        <if test="qualification != null">qualification,</if>
+        <if test="workExperience != null">work_experience,</if>
+        <if test="status != null">status,</if>
+        <if test="createBy != null">create_by,</if>
+        <if test="remark != null">remark,</if>
+        create_time
+        )values(
+        <if test="userId != null">#{userId},</if>
+        <if test="name != null">#{name},</if>
+        <if test="gender != null">#{gender},</if>
+        <if test="age != null">#{age},</if>
+        <if test="phone != null">#{phone},</if>
+        <if test="email != null">#{email},</if>
+        <if test="department != null">#{department},</if>
+        <if test="title != null">#{title},</if>
+        <if test="specialty != null">#{specialty},</if>
+        <if test="qualification != null">#{qualification},</if>
+        <if test="workExperience != null">#{workExperience},</if>
+        <if test="status != null">#{status},</if>
+        <if test="createBy != null">#{createBy},</if>
+        <if test="remark != null">#{remark},</if>
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateById" parameterType="TDoctor">
+        update t_doctor
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="department != null">department = #{department},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="specialty != null">specialty = #{specialty},</if>
+            <if test="qualification != null">qualification = #{qualification},</if>
+            <if test="workExperience != null">work_experience = #{workExperience},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where doctor_id = #{doctorId}
+    </update>
+
+    <delete id="deleteById" parameterType="Long">
+        delete
+        from t_doctor
+        where doctor_id = #{doctorId}
+    </delete>
+
+    <delete id="deleteBatchIds" parameterType="Long">
+        delete from t_doctor where doctor_id in
+        <foreach collection="ids" item="doctorId" open="(" separator="," close=")">
+            #{doctorId}
+        </foreach>
+    </delete>
+</mapper> 
