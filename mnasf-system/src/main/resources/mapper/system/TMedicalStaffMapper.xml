@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mnasf.system.mapper.TMedicalStaffMapper">
+    
+    <resultMap type="TMedicalStaff" id="TMedicalStaffResult">
+        <result property="staffId"    column="staff_id"    />
+        <result property="staffName"    column="staff_name"    />
+        <result property="gender"    column="gender"    />
+        <result property="age"    column="age"    />
+        <result property="phone"    column="phone"    />
+        <result property="email"    column="email"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="staffType"    column="staff_type"    />
+        <result property="professionalTitle"    column="professional_title"    />
+        <result property="department"    column="department"    />
+        <result property="specialty"    column="specialty"    />
+        <result property="workExperience"    column="work_experience"    />
+        <result property="education"    column="education"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTMedicalStaffVo">
+        select staff_id, staff_name, gender, age, phone, email, id_card, staff_type, professional_title, department, specialty, work_experience, education, status, create_by, create_time, update_by, update_time, remark from t_medical_staff
+    </sql>
+
+    <select id="selectTMedicalStaffList" parameterType="TMedicalStaff" resultMap="TMedicalStaffResult">
+        <include refid="selectTMedicalStaffVo"/>
+        <where>  
+            <if test="staffName != null  and staffName != ''"> and staff_name like concat('%', #{staffName}, '%')</if>
+            <if test="gender != null  and gender != ''"> and gender = #{gender}</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="idCard != null  and idCard != ''"> and id_card = #{idCard}</if>
+            <if test="staffType != null  and staffType != ''"> and staff_type = #{staffType}</if>
+            <if test="professionalTitle != null  and professionalTitle != ''"> and professional_title = #{professionalTitle}</if>
+            <if test="department != null  and department != ''"> and department = #{department}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectTMedicalStaffById" parameterType="Long" resultMap="TMedicalStaffResult">
+        <include refid="selectTMedicalStaffVo"/>
+        where staff_id = #{staffId}
+    </select>
+        
+    <insert id="insertTMedicalStaff" parameterType="TMedicalStaff" useGeneratedKeys="true" keyProperty="staffId">
+        insert into t_medical_staff
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="staffName != null">staff_name,</if>
+            <if test="gender != null">gender,</if>
+            <if test="age != null">age,</if>
+            <if test="phone != null">phone,</if>
+            <if test="email != null">email,</if>
+            <if test="idCard != null">id_card,</if>
+            <if test="staffType != null">staff_type,</if>
+            <if test="professionalTitle != null">professional_title,</if>
+            <if test="department != null">department,</if>
+            <if test="specialty != null">specialty,</if>
+            <if test="workExperience != null">work_experience,</if>
+            <if test="education != null">education,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="staffName != null">#{staffName},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="age != null">#{age},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="email != null">#{email},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="staffType != null">#{staffType},</if>
+            <if test="professionalTitle != null">#{professionalTitle},</if>
+            <if test="department != null">#{department},</if>
+            <if test="specialty != null">#{specialty},</if>
+            <if test="workExperience != null">#{workExperience},</if>
+            <if test="education != null">#{education},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            sysdate()
+         </trim>
+    </insert>
+
+    <update id="updateTMedicalStaff" parameterType="TMedicalStaff">
+        update t_medical_staff
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="staffName != null">staff_name = #{staffName},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="staffType != null">staff_type = #{staffType},</if>
+            <if test="professionalTitle != null">professional_title = #{professionalTitle},</if>
+            <if test="department != null">department = #{department},</if>
+            <if test="specialty != null">specialty = #{specialty},</if>
+            <if test="workExperience != null">work_experience = #{workExperience},</if>
+            <if test="education != null">education = #{education},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </trim>
+        where staff_id = #{staffId}
+    </update>
+
+    <delete id="deleteTMedicalStaffById" parameterType="Long">
+        delete from t_medical_staff where staff_id = #{staffId}
+    </delete>
+
+    <delete id="deleteTMedicalStaffByIds" parameterType="String">
+        delete from t_medical_staff where staff_id in 
+        <foreach item="staffId" collection="array" open="(" separator="," close=")">
+            #{staffId}
+        </foreach>
+    </delete>
+</mapper> 

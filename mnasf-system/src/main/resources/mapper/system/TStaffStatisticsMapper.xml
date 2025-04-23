@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mnasf.system.mapper.TStaffStatisticsMapper">
+    
+    <resultMap type="TStaffStatistics" id="TStaffStatisticsResult">
+        <result property="statId"    column="stat_id"    />
+        <result property="staffId"    column="staff_id"    />
+        <result property="staffType"    column="staff_type"    />
+        <result property="statDate"    column="stat_date"    />
+        <result property="assessmentCount"    column="assessment_count"    />
+        <result property="followupCount"    column="followup_count"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTStaffStatisticsVo">
+        select stat_id, staff_id, staff_type, stat_date, assessment_count, followup_count, create_by, create_time, update_by, update_time, remark from t_staff_statistics
+    </sql>
+
+    <select id="selectTStaffStatisticsList" parameterType="TStaffStatistics" resultMap="TStaffStatisticsResult">
+        <include refid="selectTStaffStatisticsVo"/>
+        <where>  
+            <if test="staffId != null "> and staff_id = #{staffId}</if>
+            <if test="staffType != null  and staffType != ''"> and staff_type = #{staffType}</if>
+            <if test="statDate != null "> and stat_date = #{statDate}</if>
+            <if test="assessmentCount != null "> and assessment_count = #{assessmentCount}</if>
+            <if test="followupCount != null "> and followup_count = #{followupCount}</if>
+        </where>
+    </select>
+    
+    <select id="selectTStaffStatisticsById" parameterType="Long" resultMap="TStaffStatisticsResult">
+        <include refid="selectTStaffStatisticsVo"/>
+        where stat_id = #{statId}
+    </select>
+        
+    <insert id="insertTStaffStatistics" parameterType="TStaffStatistics" useGeneratedKeys="true" keyProperty="statId">
+        insert into t_staff_statistics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="staffId != null">staff_id,</if>
+            <if test="staffType != null">staff_type,</if>
+            <if test="statDate != null">stat_date,</if>
+            <if test="assessmentCount != null">assessment_count,</if>
+            <if test="followupCount != null">followup_count,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="staffId != null">#{staffId},</if>
+            <if test="staffType != null">#{staffType},</if>
+            <if test="statDate != null">#{statDate},</if>
+            <if test="assessmentCount != null">#{assessmentCount},</if>
+            <if test="followupCount != null">#{followupCount},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTStaffStatistics" parameterType="TStaffStatistics">
+        update t_staff_statistics
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="staffId != null">staff_id = #{staffId},</if>
+            <if test="staffType != null">staff_type = #{staffType},</if>
+            <if test="statDate != null">stat_date = #{statDate},</if>
+            <if test="assessmentCount != null">assessment_count = #{assessmentCount},</if>
+            <if test="followupCount != null">followup_count = #{followupCount},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where stat_id = #{statId}
+    </update>
+
+    <delete id="deleteTStaffStatisticsById" parameterType="Long">
+        delete from t_staff_statistics where stat_id = #{statId}
+    </delete>
+
+    <delete id="deleteTStaffStatisticsByIds" parameterType="String">
+        delete from t_staff_statistics where stat_id in 
+        <foreach item="statId" collection="array" open="(" separator="," close=")">
+            #{statId}
+        </foreach>
+    </delete>
+</mapper> 

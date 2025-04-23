@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mnasf.system.mapper.TNutritionTrendMapper">
+    
+    <resultMap type="TNutritionTrend" id="TNutritionTrendResult">
+        <result property="trendId"    column="trend_id"    />
+        <result property="patientId"    column="patient_id"    />
+        <result property="assessmentDate"    column="assessment_date"    />
+        <result property="mnaScore"    column="mna_score"    />
+        <result property="conutScore"    column="conut_score"    />
+        <result property="gnriScore"    column="gnri_score"    />
+        <result property="pniScore"    column="pni_score"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTNutritionTrendVo">
+        select trend_id, patient_id, assessment_date, mna_score, conut_score, gnri_score, pni_score, create_by, create_time, update_by, update_time, remark from t_nutrition_trend
+    </sql>
+
+    <select id="selectTNutritionTrendList" parameterType="TNutritionTrend" resultMap="TNutritionTrendResult">
+        <include refid="selectTNutritionTrendVo"/>
+        <where>  
+            <if test="patientId != null "> and patient_id = #{patientId}</if>
+            <if test="assessmentDate != null "> and assessment_date = #{assessmentDate}</if>
+            <if test="mnaScore != null "> and mna_score = #{mnaScore}</if>
+            <if test="conutScore != null "> and conut_score = #{conutScore}</if>
+            <if test="gnriScore != null "> and gnri_score = #{gnriScore}</if>
+            <if test="pniScore != null "> and pni_score = #{pniScore}</if>
+        </where>
+    </select>
+    
+    <select id="selectTNutritionTrendById" parameterType="Long" resultMap="TNutritionTrendResult">
+        <include refid="selectTNutritionTrendVo"/>
+        where trend_id = #{trendId}
+    </select>
+        
+    <insert id="insertTNutritionTrend" parameterType="TNutritionTrend" useGeneratedKeys="true" keyProperty="trendId">
+        insert into t_nutrition_trend
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">patient_id,</if>
+            <if test="assessmentDate != null">assessment_date,</if>
+            <if test="mnaScore != null">mna_score,</if>
+            <if test="conutScore != null">conut_score,</if>
+            <if test="gnriScore != null">gnri_score,</if>
+            <if test="pniScore != null">pni_score,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">#{patientId},</if>
+            <if test="assessmentDate != null">#{assessmentDate},</if>
+            <if test="mnaScore != null">#{mnaScore},</if>
+            <if test="conutScore != null">#{conutScore},</if>
+            <if test="gnriScore != null">#{gnriScore},</if>
+            <if test="pniScore != null">#{pniScore},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTNutritionTrend" parameterType="TNutritionTrend">
+        update t_nutrition_trend
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null">patient_id = #{patientId},</if>
+            <if test="assessmentDate != null">assessment_date = #{assessmentDate},</if>
+            <if test="mnaScore != null">mna_score = #{mnaScore},</if>
+            <if test="conutScore != null">conut_score = #{conutScore},</if>
+            <if test="gnriScore != null">gnri_score = #{gnriScore},</if>
+            <if test="pniScore != null">pni_score = #{pniScore},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where trend_id = #{trendId}
+    </update>
+
+    <delete id="deleteTNutritionTrendById" parameterType="Long">
+        delete from t_nutrition_trend where trend_id = #{trendId}
+    </delete>
+
+    <delete id="deleteTNutritionTrendByIds" parameterType="String">
+        delete from t_nutrition_trend where trend_id in 
+        <foreach item="trendId" collection="array" open="(" separator="," close=")">
+            #{trendId}
+        </foreach>
+    </delete>
+</mapper> 
